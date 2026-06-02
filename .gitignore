@@ -5,6 +5,9 @@ build/
 !**/src/test/**/build/
 .kotlin
 
+# Ignore large installer artifacts
+*.dmg
+
 ### IntelliJ IDEA ###
 .idea/
 .idea/modules.xml
