@@ -62,7 +62,15 @@ public class MemberDaoImpl_pgj implements MemberDao {
         try (PreparedStatement pstmt = conn.prepareStatement(sql);
              ResultSet rs = pstmt.executeQuery()) {
             while (rs.next()) {
-                memberList.add(makeMember(rs));
+                Member member = new Member();
+                member.setMemberNo(rs.getInt("no"));
+                member.setId(rs.getString("id"));
+                member.setPw(rs.getString("password"));
+                member.setName(rs.getString("name"));
+                member.setRole(rs.getString("role"));
+                member.setDeletedYn(rs.getString("deleted_yn").charAt(0));
+
+                memberList.add(member);
             }
         }
 
@@ -78,24 +86,20 @@ public class MemberDaoImpl_pgj implements MemberDao {
 
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
-                    return makeMember(rs);
+                    Member member = new Member();
+                    member.setMemberNo(rs.getInt("no"));
+                    member.setId(rs.getString("id"));
+                    member.setPw(rs.getString("password"));
+                    member.setName(rs.getString("name"));
+                    member.setRole(rs.getString("role"));
+                    member.setDeletedYn(rs.getString("deleted_yn").charAt(0));
+
+                    return member;
                 }
             }
         }
 
         return null;
-    }
-
-    //ResultSet 한 행(row) -> Member 객체 하나 get(),getList() 에서 쓰임
-    private Member makeMember(ResultSet rs) throws SQLException {
-        Member member = new Member();
-        member.setMemberNo(rs.getInt("no"));
-        member.setId(rs.getString("id"));
-        member.setPw(rs.getString("password"));
-        member.setName(rs.getString("name"));
-        member.setRole(rs.getString("role"));
-        member.setDeletedYn(rs.getString("deleted_yn").charAt(0));
-        return member;
     }
 
     @Override
@@ -153,4 +157,3 @@ public class MemberDaoImpl_pgj implements MemberDao {
         return member; // 존재하면 member , 없으면 null
     }
 }
-
