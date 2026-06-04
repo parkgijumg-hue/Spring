@@ -15,8 +15,12 @@ public class Member {
     private String pw;
     private String name;
     private String role;
+    private String deptCode;
+    private String deptName;
     private char deletedYn;
 
     public Member(String id, String pw, String name, String role) {
     }
+
+
 }

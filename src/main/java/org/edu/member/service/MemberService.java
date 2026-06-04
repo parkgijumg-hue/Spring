@@ -1,16 +1,21 @@
 package org.edu.member.service;
 
 import org.edu.member.dao.MemberDao;
-import org.edu.member.dao.MemberDaoImpl;
+//import org.edu.member.dao.MemberDaoImpl;
+import org.edu.member.dao.MemberDaoImpl_pgj;
 import org.edu.member.vo.Member;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Scanner;
 
 public class MemberService {
     private Scanner sc = new Scanner(System.in);
 
-    private MemberDao dao = new MemberDaoImpl();
+    // 수업
+    //private MemberDao dao = new MemberDaoImpl();
+    // 숙제
+    private MemberDao dao = new MemberDaoImpl_pgj();
 
     public void displayMenu() {
 
@@ -24,6 +29,7 @@ public class MemberService {
                 System.out.println("3. 회원 정보 조회");
                 System.out.println("4. 회원 수정");
                 System.out.println("5. 회원 삭제");
+                System.out.println("6. 회원 부서명 조회");
                 System.out.println("0. 종료");
                 System.out.print("메뉴 선택 >> ");
 
@@ -36,18 +42,20 @@ public class MemberService {
                         create();
                         break;
                     case 2:
-                        //getList();
+                        getList();
                         break;
                     case 3:
-                        //get();
+                        get();
                         break;
                     case 4:
                         update();
                         break;
                     case 5:
-                        //delete();
+                        delete();
                         break;
-
+                    case 6:
+                        getDeptName();
+                        break;
                     case 0:
                         System.out.println("[프로그램 종료]");
                         break;
@@ -138,9 +146,69 @@ public class MemberService {
         }else{
             System.out.println("일치하는 회원이 없습니다.");
         }
+    }
+    // getList() : 회원 목록 전체 조회
+    private void getList() throws SQLException {
+        System.out.println("=== 회원 목록 조회 ===");
 
+        List<Member> memberList = dao.getList();
+        if (memberList.isEmpty()) {
+            System.out.println("조회된 회원이 없습니다.");
+            return;
+        }
 
-
+        for (Member member : memberList) {
+            System.out.println(member);
+        }
     }
 
+    // get() : 회원 번호가 일치하는 회원 한명 조회
+    private void get() throws SQLException {
+        System.out.println("=== 회원 정보 조회 ===");
+
+        System.out.print("회원 번호 : ");
+        int no = sc.nextInt();
+        sc.nextLine();
+
+        Member member = dao.get(no);
+        if (member != null) {
+            System.out.println(member);
+        } else {
+            System.out.println("일치하는 회원이 없습니다.");
+        }
+    }
+
+    // delete() : 회원 번호가 일치하는 회원 삭제
+    private void delete() throws SQLException {
+        System.out.println("=== 회원 삭제 ===");
+
+        System.out.print("회원 번호 : ");
+        int no = sc.nextInt();
+        sc.nextLine();
+
+        int result = dao.delete(no);
+        if (result != 0) {
+            System.out.println("회원 정보가 삭제되었습니다.");
+        } else {
+            System.out.println("일치하는 회원이 없습니다.");
+        }
+    }
+    // 회원 번호가 일치하는 회원의 번호, 이름, 부서코드, 부서명 조회
+    private void getDeptName() throws SQLException {
+        System.out.println("=== 회원 부서정보 조회 ===");
+
+        System.out.print("부서 번호 : ");
+        int deptno = sc.nextInt();
+        sc.nextLine();
+
+        Member member = dao.getDeptName(deptno);
+        if (member != null) {
+            System.out.println("회원번호 : " + member.getMemberNo());
+            System.out.println("이름 : " + member.getName());
+            System.out.println("부서코드 : " + member.getDeptCode());
+            System.out.println("부서명 : " + member.getDeptName());
+        } else {
+            System.out.println("일치하는 회원이 없습니다.");
+        }
+    }
 }
