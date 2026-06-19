@@ -23,4 +23,10 @@ public class TimeMapperTest {
         log.info(timeMapper.getClass().getName());
         log.info(timeMapper.getTime());
     }
+    @Test
+    @DisplayName("TimeMapper의 getTime2()")
+    public void getTime2() {
+        log.info("getTime2");
+        log.info(timeMapper.getTime2());
+    }
 }

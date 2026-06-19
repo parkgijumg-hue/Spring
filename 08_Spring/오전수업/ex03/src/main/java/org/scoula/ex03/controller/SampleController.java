@@ -3,10 +3,7 @@ package org.scoula.ex03.controller;
 import lombok.extern.log4j.Log4j2;
 import org.scoula.ex03.dto.SampleDTO;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
@@ -49,5 +46,15 @@ public class SampleController {
     public String ex02List(@RequestParam("ids") ArrayList<String> ids) {
         log.info("ids: " + ids);
         return "ex02List";
+    }
+    @GetMapping("/ex07")
+    public
+    @ResponseBody SampleDTO ex07() {
+        log.info("/ex07........");
+        SampleDTO dto = new SampleDTO();
+        dto.setAge(10);
+        dto.setName("홍길동");
+        return dto
+                ;
     }
 }

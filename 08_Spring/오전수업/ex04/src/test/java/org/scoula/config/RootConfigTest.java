@@ -1,6 +1,8 @@
 package org.scoula.config;
 
 import lombok.extern.log4j.Log4j2;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,6 +25,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class RootConfigTest {
     @Autowired
     private DataSource dataSource;
+    @Autowired
+    private SqlSessionFactory sqlSessionFactory;
 
     @Test
     @DisplayName("hikariCP test결과 확인")
@@ -30,6 +34,18 @@ class RootConfigTest {
         try (Connection con = dataSource.getConnection()) {
             log.info("hikariCP 준비 완료");
             log.info(con);
+        }
+    }
+    @Test
+    public void testSqlSessionFactory() {
+        try (
+                SqlSession session = sqlSessionFactory.openSession();
+                Connection con = session.getConnection();
+        ) {
+            log.info(session);
+            log.info(con);
+        } catch (Exception e) {
+            fail(e.getMessage());
         }
     }
 }

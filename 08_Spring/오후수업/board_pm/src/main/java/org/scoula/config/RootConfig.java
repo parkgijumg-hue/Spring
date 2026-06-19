@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
@@ -24,6 +25,9 @@ import javax.sql.DataSource;
 @Configuration
 @MapperScan(basePackages = {"org.scoula.board.mapper"})  // Mapper 인터페이스 스캔
 @PropertySource({"classpath:/application.properties"})
+@ComponentScan(basePackages = {
+        "org.scoula.board.service" // BoardService 패키지 추
+})    // Service 스캔
 public class RootConfig {
 
     // application.properties에서 데이터베이스 연결 정보 주입

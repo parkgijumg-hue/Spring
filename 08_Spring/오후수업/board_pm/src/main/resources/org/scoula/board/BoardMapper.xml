@@ -28,6 +28,12 @@
         <!--
           생성된 PK 값을 BoardVO 객체의 no 필드에 설정
            - LAST_INSERT_ID(): MySQL의 마지막 삽입 ID 조회 함수
+
+           <selectKey> 태그 : INSERT/UPDATE 시 사용할 키를 조회해서 파라미터의 지정된 필드에 대입
+           - resultType  : 반환되는 키값의 타입 지정
+           - keyProperty : 빈환된 키를 대입할 VO 객체의 필드 지정
+           - keyColumn   : 컬럼명
+           - order       : BEFORE / AFTER 지정 -> 쿼리문이 언제 수행할지 정함
         -->
         <selectKey resultType="Long" keyProperty="no" keyColumn="no" order="AFTER">
             SELECT LAST_INSERT_ID()
